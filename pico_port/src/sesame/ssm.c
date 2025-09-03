@@ -3,6 +3,7 @@
 #include "c_ccm.h"
 #include "ssm_cmd.h"
 #include <stdio.h>
+#include <string.h>
 
 static const char * TAG = "ssm.c";
 
@@ -52,12 +53,12 @@ static void ssm_parse_response(sesame * ssm, uint8_t cmd_it_code) {
         handle_reg_data_from_ssm(ssm);
         break;
     case SSM_ITEM_CODE_LOGIN:
-        printf("[INFO] %s: " "[%d][ssm][login][ok]", ssm->conn_id "\n", TAG);
+        printf("[INFO] %s: [%d][ssm][login][ok]\n", TAG, ssm->conn_id);
         ssm->device_status = SSM_LOGGIN;
         p_ssms_env->ssm_cb__(ssm); // callback: ssm_action_handle
         break;
     case SSM_ITEM_CODE_HISTORY:
-        printf("[INFO] %s: " "[%d][ssm][hisdataLength: %d]", ssm->conn_id, ssm->c_offset "\n", TAG);
+        printf("[INFO] %s: [%d][ssm][hisdataLength: %d]\n", TAG, ssm->conn_id, ssm->c_offset);
         if (ssm->c_offset == 0) { //循環讀取 避免沒取完歷史
             return;
         }
@@ -87,7 +88,7 @@ void ssm_ble_receiver(sesame * ssm, const uint8_t * p_data, uint16_t len) {
     uint8_t cmd_it_code = ssm->b_buf[1];
     ssm->c_offset = ssm->c_offset - 2;
     memcpy(ssm->b_buf, ssm->b_buf + 2, ssm->c_offset);
-    printf("[INFO] %s: " "[ssm][say][%d][%s][%s]", ssm->conn_id, SSM_OP_CODE_STR(cmd_op_code), SSM_ITEM_CODE_STR(cmd_it_code) "\n", TAG);
+    printf("[INFO] %s: [ssm][say][%d][%s][%s]\n", TAG, ssm->conn_id, SSM_OP_CODE_STR(cmd_op_code), SSM_ITEM_CODE_STR(cmd_it_code));
     if (cmd_op_code == SSM_OP_CODE_PUBLISH) {
         ssm_parse_publish(ssm, cmd_it_code);
     } else if (cmd_op_code == SSM_OP_CODE_RESPONSE) {
@@ -97,7 +98,7 @@ void ssm_ble_receiver(sesame * ssm, const uint8_t * p_data, uint16_t len) {
 }
 
 void talk_to_ssm(sesame * ssm, uint8_t parsing_type) {
-    printf("[INFO] %s: " "[esp32][say][%d][%s]", ssm->conn_id, SSM_ITEM_CODE_STR(ssm->b_buf[0]) "\n", TAG);
+    printf("[INFO] %s: [pico][say][%d][%s]\n", TAG, ssm->conn_id, SSM_ITEM_CODE_STR(ssm->b_buf[0]));
     if (parsing_type == SSM_SEG_PARSING_TYPE_CIPHERTEXT) {
         aes_ccm_encrypt_and_tag(ssm->cipher.token, (const unsigned char *) &ssm->cipher.encrypt, 13, additional_data, 1, ssm->b_buf, ssm->c_offset, ssm->b_buf, ssm->b_buf + ssm->c_offset, CCM_TAG_LENGTH);
         ssm->cipher.encrypt.count++;

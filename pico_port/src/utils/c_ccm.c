@@ -1,5 +1,6 @@
 
 
+#include <stdint.h>
 #include <string.h>
 #include "aes-cbc-cmac.h"
 #include "c_ccm.h"

@@ -21,7 +21,7 @@ static int crypto_backend_micro_ecc_rng_callback(uint8_t * dest, unsigned size) 
 }
 
 void send_reg_cmd_to_ssm(sesame * ssm) {
-    printf("[WARN] %s: " "[esp32->ssm][register]" "\n", TAG);
+    printf("[WARN] %s: [pico->ssm][register]\n", TAG);
     uECC_set_rng(crypto_backend_micro_ecc_rng_callback);
     uint8_t ecc_public_pico[64];
     uECC_make_key_lit(ecc_public_pico, ecc_private_pico, uECC_secp256r1());
@@ -32,7 +32,7 @@ void send_reg_cmd_to_ssm(sesame * ssm) {
 }
 
 void handle_reg_data_from_ssm(sesame * ssm) {
-    printf("[WARN] %s: " "[esp32<-ssm][register]" "\n", TAG);
+    printf("[WARN] %s: [pico<-ssm][register]\n", TAG);
     memcpy(ssm->public_key, &ssm->b_buf[13], 64);
     uint8_t ecdh_secret_ssm[32];
     uECC_shared_secret_lit(ssm->public_key, ecc_private_pico, ecdh_secret_ssm, uECC_secp256r1());
@@ -44,7 +44,7 @@ void handle_reg_data_from_ssm(sesame * ssm) {
 }
 
 void send_login_cmd_to_ssm(sesame * ssm) {
-    printf("[WARN] %s: " "[esp32->ssm][login]" "\n", TAG);
+    printf("[WARN] %s: [pico->ssm][login]\n", TAG);
     ssm->b_buf[0] = SSM_ITEM_CODE_LOGIN;
     AES_CMAC(ssm->device_secret, (const unsigned char *) ssm->cipher.decrypt.random_code, 4, ssm->cipher.token);
     memcpy(&ssm->b_buf[1], ssm->cipher.token, 4);
@@ -53,7 +53,7 @@ void send_login_cmd_to_ssm(sesame * ssm) {
 }
 
 void send_read_history_cmd_to_ssm(sesame * ssm) {
-    printf("[INFO] %s: " "[send_read_history_cmd_to_ssm]" "\n", TAG);
+    printf("[INFO] %s: [send_read_history_cmd_to_ssm]\n", TAG);
     ssm->c_offset = 2;
     ssm->b_buf[0] = SSM_ITEM_CODE_HISTORY;
     ssm->b_buf[1] = 1;
@@ -61,7 +61,7 @@ void send_read_history_cmd_to_ssm(sesame * ssm) {
 }
 
 void ssm_lock(uint8_t * tag, uint8_t tag_length) {
-    // printf("[INFO] %s: " "[ssm][ssm_lock][%s]", SSM_STATUS_STR(p_ssms_env->ssm.device_status) "\n", TAG);
+    // printf("[INFO] %s: "[ssm][ssm_lock][%s]", SSM_STATUS_STR(p_ssms_env->ssm.device_status)\n", TAG);
     sesame * ssm = &p_ssms_env->ssm;
     if (ssm->device_status >= SSM_LOGGIN) {
         if (tag_length == 0) {
