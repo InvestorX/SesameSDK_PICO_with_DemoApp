@@ -4,6 +4,8 @@
 #include "pico/cyw43_arch.h"
 #include <stdio.h>
 
+#define STRINGIFY(x) #x
+
 static const char * TAG = "main.c";
 
 static void ssm_action_handle(sesame * ssm) {
@@ -22,7 +24,11 @@ int main(void) {
     // Wait a bit for USB CDC to be ready
     sleep_ms(2000);
     
-    printf("[INFO] %s: SesameSDK_Pico [Pico Port v1.0]\n", TAG);
+    printf("[INFO] %s: SesameSDK_Pico [Pico W/Pico 2 Port v1.1]\n", TAG);
+    
+#ifdef PICO_BOARD
+    printf("[INFO] %s: Target board: %s\n", TAG, STRINGIFY(PICO_BOARD));
+#endif
     
     // Initialize Sesame
     ssm_init(ssm_action_handle);
