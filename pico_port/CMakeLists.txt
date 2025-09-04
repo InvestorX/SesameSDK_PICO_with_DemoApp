@@ -1,7 +1,19 @@
 cmake_minimum_required(VERSION 3.13)
 
-# Set board to Pico W for Bluetooth support
-set(PICO_BOARD pico_w)
+# Set board type - supports both Pico W and Pico 2
+# You can override this by setting PICO_BOARD environment variable:
+# export PICO_BOARD=pico2_w  (for Pico 2)
+# export PICO_BOARD=pico_w   (for original Pico W)
+if(NOT DEFINED PICO_BOARD)
+    set(PICO_BOARD pico_w)
+endif()
+
+message(STATUS "Building for board: ${PICO_BOARD}")
+
+# Validate board type
+if(NOT (PICO_BOARD STREQUAL "pico_w" OR PICO_BOARD STREQUAL "pico2_w"))
+    message(FATAL_ERROR "Unsupported board: ${PICO_BOARD}. Supported boards: pico_w, pico2_w")
+endif()
 
 # Include Pico SDK
 include(pico_sdk_import.cmake)

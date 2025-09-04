@@ -1,15 +1,16 @@
-# Raspberry Pi Pico W 向け SesameSDK
+# Raspberry Pi Pico W / Pico 2 向け SesameSDK
 
-これは ESP32 SesameSDK を Raspberry Pi Pico W に移植したバージョンで、Sesame5 スマートロックとの BLE 通信を可能にします。
+これは ESP32 SesameSDK を Raspberry Pi Pico W および Pico 2 に移植したバージョンで、Sesame5 スマートロックとの BLE 通信を可能にします。
 
 ## 必要なもの
 
-- Raspberry Pi Pico W (Bluetooth 機能に必要)
+- Raspberry Pi Pico W または Pico 2 (Bluetooth 機能に必要)
 - Pico SDK のインストールと設定
 - CMake 3.13 以降
 
 ## ビルド方法
 
+### Pico W の場合:
 1. Pico SDK 環境の設定:
 ```bash
 export PICO_SDK_PATH=/path/to/pico-sdk
@@ -17,13 +18,21 @@ export PICO_SDK_PATH=/path/to/pico-sdk
 
 2. ビルドディレクトリを作成してプロジェクトをビルド:
 ```bash
-mkdir build
-cd build
-cmake ..
-make
+./build.sh
 ```
 
-3. 生成された `SesameSDK_Pico.uf2` ファイルを Pico W に書き込み
+### Pico 2 の場合:
+1. Pico SDK 環境の設定:
+```bash
+export PICO_SDK_PATH=/path/to/pico-sdk
+```
+
+2. Pico 2 用にビルド:
+```bash
+./build.sh pico2
+```
+
+3. 生成された `SesameSDK_Pico.uf2` ファイルを Pico W または Pico 2 に書き込み
 
 ## 機能
 
@@ -33,17 +42,17 @@ make
 
 ## ハードウェア設定
 
-1. Raspberry Pi Pico W を USB でコンピュータに接続
+1. Raspberry Pi Pico W または Pico 2 を USB でコンピュータに接続
 2. ブートローダーモード時にデバイスは USB ストレージデバイスとして表示されます
 3. `.uf2` ファイルをデバイスにコピー
-4. Pico W が自動的に再起動して Sesame デバイスのスキャンを開始
+4. Pico W/Pico 2 が自動的に再起動して Sesame デバイスのスキャンを開始
 
 ## ESP32 版との違い
 
 - **ビルドシステム**: ESP-IDF の代わりに Pico SDK CMake を使用
 - **BLE スタック**: NimBLE の代わりに BTstack を使用
 - **ログ出力**: ESP_LOG マクロの代わりに printf を使用
-- **ハードウェア**: ESP32-C3 の代わりに Pico W をターゲット
+- **ハードウェア**: ESP32-C3 の代わりに Pico W/Pico 2 をターゲット
 
 ## コード構造
 
@@ -68,7 +77,7 @@ src/
 
 ## シリアル出力
 
-Pico W は USB CDC 経由でデバッグ情報を出力します。仮想 COM ポートに接続すると以下が確認できます:
+Pico W/Pico 2 は USB CDC 経由でデバッグ情報を出力します。仮想 COM ポートに接続すると以下が確認できます:
 - Bluetooth 初期化ステータス
 - デバイス探索メッセージ
 - 接続ステータス
@@ -81,4 +90,4 @@ Pico W は USB CDC 経由でデバッグ情報を出力します。仮想 COM �
 ## 謝辞
 
 - CANDY HOUSE による元の ESP32 実装
-- Pico SDK と BTstack を使用して Raspberry Pi Pico W に移植
+- Pico SDK と BTstack を使用して Raspberry Pi Pico W/Pico 2 に移植

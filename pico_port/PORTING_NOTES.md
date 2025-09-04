@@ -1,10 +1,11 @@
-# Comparison: ESP32 vs Pico W SesameSDK
+# Comparison: ESP32 vs Pico W/Pico 2 SesameSDK
 
 ## Architecture Differences
 
-| Feature | ESP32 Version | Pico W Version |
-|---------|---------------|----------------|
-| **Microcontroller** | ESP32-C3-DevKitM-1 | Raspberry Pi Pico W |
+| Feature | ESP32 Version | Pico W/Pico 2 Version |
+|---------|---------------|------------------------|
+| **Microcontroller** | ESP32-C3-DevKitM-1 | Raspberry Pi Pico W / Pico 2 |
+| **Chip** | ESP32-C3 (RISC-V) | RP2040 (ARM Cortex-M0+) / RP2350 (ARM Cortex-M33/RISC-V) |
 | **SDK/Framework** | ESP-IDF | Pico SDK |
 | **BLE Stack** | NimBLE | BTstack |
 | **Build System** | ESP-IDF CMake | Pico SDK CMake |
@@ -48,6 +49,13 @@
 - USB-native (easier debugging)
 - GPIO-rich (26 pins vs 22 on ESP32-C3)
 
+### Pico 2 Advantages:
+- Higher performance (RP2350 vs RP2040)
+- More RAM (520KB vs 264KB on Pico W)
+- Dual-core ARM Cortex-M33 or RISC-V Hazard3
+- Enhanced security features
+- Backward compatible with Pico W code
+
 ## Crypto Implementation
 Both versions use the same crypto libraries:
 - **uECC**: Elliptic Curve Cryptography
@@ -56,13 +64,21 @@ Both versions use the same crypto libraries:
 
 ## Migration Notes
 
-When porting from ESP32 to Pico W:
+When porting from ESP32 to Pico W/Pico 2:
 
 1. **Replace ESP-IDF includes** with Pico SDK equivalents
 2. **Convert ESP logging** to printf statements  
 3. **Adapt BLE stack calls** from NimBLE to BTstack
 4. **Update CMakeLists.txt** for Pico SDK
 5. **Handle timing differently** (no FreeRTOS tasks by default)
+
+## Pico 2 Compatibility
+
+The code is fully compatible with both Pico W and Pico 2:
+- **Board selection**: Use `PICO_BOARD=pico2_w` for Pico 2 builds
+- **No code changes needed**: Pico SDK handles hardware abstraction
+- **Performance improvement**: Pico 2's faster processor benefits BLE processing
+- **Memory benefits**: Extra RAM in Pico 2 provides more headroom
 
 ## Future Improvements
 

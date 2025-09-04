@@ -4,7 +4,7 @@
 # This checks for common C syntax issues without requiring Pico SDK
 
 echo "=========================================="
-echo "SesameSDK Pico W Syntax Verification"
+echo "SesameSDK Pico W/Pico 2 Syntax Verification"
 echo "=========================================="
 
 # Check if gcc is available for basic syntax checking
@@ -56,5 +56,5 @@ echo "=========================================="
 echo "Basic verification complete!"
 echo ""
 echo "NOTE: Full compilation requires Pico SDK installation."
-echo "Run './build.sh' after setting up PICO_SDK_PATH."
+echo "Run './build.sh' for Pico W or './build.sh pico2' for Pico 2."
 echo "=========================================="
