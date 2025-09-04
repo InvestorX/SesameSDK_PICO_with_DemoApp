@@ -1,27 +1,40 @@
 ![SesameSDK](https://github.com/CANDY-HOUSE/.github/blob/main/profile/images/SesameSDK.png?raw=true)
-# ESP32-C3-DevKitM-1 Sesame5 開關控制範例
+# SesameSDK for ESP32 & Raspberry Pi Pico - Sesame5 開關控制範例
 
-這個專案展示了如何使用 ESP32-C3-DevKitM-1 微控制器來註冊和控制 Sesame5 智能鎖。本範例使用 ESP-IDF 開發框架，透過 BLE 技術自動尋找、連接並註冊附近的 Sesame5 設備。當 ESP32-C3-DevKitM-1 偵測到 Sesame5 達到開鎖位置時，會發出指令自動上鎖。
+這個專案展示了如何使用 **ESP32-C3-DevKitM-1** 或 **Raspberry Pi Pico W/Pico 2** 微控制器來註冊和控制 Sesame5 智能鎖。本範例透過 BLE 技術自動尋找、連接並註冊附近的 Sesame5 設備。當微控制器偵測到 Sesame5 達到開鎖位置時，會發出指令自動上鎖。
+
+## 支援平台
+- **ESP32-C3-DevKitM-1**: 使用 ESP-IDF 開發框架（本目錄的主要內容）
+- **Raspberry Pi Pico W / Pico 2**: 使用 Pico SDK 開發框架（請參見 [pico_port](./pico_port/) 目錄）
 
 ## 多語言版本
 - [English version](README_EN.md)
 - [日本語版](README_JP.md)
 
-## 前提條件
+## ESP32-C3-DevKitM-1 使用方法
+
+### 前提條件
 您需要先安裝 ESP-IDF，可以透過 ESP-IDF 的 `install.sh` 腳本來安裝必要的工具鏈和依賴。
 
-## 安裝與環境設定
+### 安裝與環境設定
 1. 請確保您已經通過 ESP-IDF 的 `install.sh` 安裝了工具鏈。
 2. 開啟終端機，導航到 ESP-IDF 的路徑，並執行 `export.sh` 加入環境變數。
 3. 將ESP32-C3-DevKitM-1透過USB連接到您的電腦。
 4. 回到專案資料夾，運行 `idf.py flash` 進行編譯和燒錄。
 
-## 使用方法
+### 使用方法
 燒錄並重啟 ESP32-C3-DevKitM-1 後，它會自動搜尋附近的未註冊的Sesame設備。在連接並註冊後，ESP32-C3-DevKitM-1 會監聽 Sesame5 的狀態，並在適當的時機發送上鎖指令。
+
+## Raspberry Pi Pico W/Pico 2 使用方法
+
+如需使用 Raspberry Pi Pico W 或 Pico 2，請參閱 [pico_port](./pico_port/) 目錄中的詳細說明：
+- [pico_port/README.md](./pico_port/README.md) - 英文版說明
+- [pico_port/README_JP.md](./pico_port/README_JP.md) - 日文版說明
 
 ## 特色與功能
 - **自動設備探索**：自動搜尋和連接附近的 Sesame5 智能鎖。
-- **自動上鎖**：當 Sesame5 達到預設開鎖位置時，ESP32-C3-DevKitM-1 會發出上鎖指令。
+- **自動上鎖**：當 Sesame5 達到預設開鎖位置時，微控制器會發出上鎖指令。
+- **雙平台支援**：同時支援 ESP32-C3-DevKitM-1 和 Raspberry Pi Pico W/Pico 2。
 
 ## 原始碼參考
 這個範例改自 ESP-IDF 內的 nimble BLE Central Example。

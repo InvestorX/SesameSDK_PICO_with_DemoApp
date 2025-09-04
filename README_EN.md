@@ -1,27 +1,40 @@
 ![img](./doc/resources/SesameSDK_20231201.png)
-# ESP32-C3-DevKitM-1 Sesame5 Switch Control Example
+# SesameSDK for ESP32 & Raspberry Pi Pico - Sesame5 Switch Control Example
 
-This project demonstrates how to use the ESP32-C3-DevKitM-1 microcontroller to register and control a Sesame5 smart lock. Utilizing the ESP-IDF development framework and BLE technology, this example automatically searches for, connects to, and registers nearby Sesame5 devices. When the ESP32-C3-DevKitM-1 detects that the Sesame5 is in the unlock position, it issues a command to automatically lock it.
+This project demonstrates how to use **ESP32-C3-DevKitM-1** or **Raspberry Pi Pico W/Pico 2** microcontrollers to register and control a Sesame5 smart lock. Utilizing BLE technology, this example automatically searches for, connects to, and registers nearby Sesame5 devices. When the microcontroller detects that the Sesame5 is in the unlock position, it issues a command to automatically lock it.
+
+## Supported Platforms
+- **ESP32-C3-DevKitM-1**: Using ESP-IDF development framework (main content of this directory)
+- **Raspberry Pi Pico W / Pico 2**: Using Pico SDK development framework (see [pico_port](./pico_port/) directory)
 
 ## Other Languages
 - [返回中文版](README.md)
 - [日本語版](README_JP.md)
 
-## Prerequisites
+## ESP32-C3-DevKitM-1 Usage
+
+### Prerequisites
 You will need to install ESP-IDF, which can be done using the `install.sh` script from the ESP-IDF to install necessary toolchains and dependencies.
 
-## Installation and Environment Setup
+### Installation and Environment Setup
 1. Ensure that you have installed the toolchain through ESP-IDF's `install.sh`.
 2. Open a terminal, navigate to the ESP-IDF path, and run `export.sh` to add it to your environment variables.
 3. Connect your ESP32-C3-DevKitM-1 to your computer via USB.
 4. Return to the project folder and run `idf.py flash` to compile and flash.
 
-## Usage
+### Usage
 After flashing and rebooting the ESP32-C3-DevKitM-1, it will automatically search for unregistered Sesame devices nearby. Once connected and registered, the ESP32-C3-DevKitM-1 will monitor the status of the Sesame5 and issue a lock command at the appropriate time.
+
+## Raspberry Pi Pico W/Pico 2 Usage
+
+For using Raspberry Pi Pico W or Pico 2, please refer to the detailed instructions in the [pico_port](./pico_port/) directory:
+- [pico_port/README.md](./pico_port/README.md) - English instructions
+- [pico_port/README_JP.md](./pico_port/README_JP.md) - Japanese instructions
 
 ## Features and Functionality
 - **Automatic Device Discovery**: Automatically searches for and connects to nearby Sesame5 smart locks.
 - **Automatic Locking**: Issues a lock command when the Sesame5 reaches the preset unlock position.
+- **Dual Platform Support**: Supports both ESP32-C3-DevKitM-1 and Raspberry Pi Pico W/Pico 2.
 
 ## Source Reference
 This example is modified from the nimble BLE Central Example within ESP-IDF.
